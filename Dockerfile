@@ -2,8 +2,7 @@
 # Start with Alpine Linux
 FROM alpine:3.8
 
-AUTHOR Tinashe M. Tapera <taperat@pennmedicine.upenn.edu>
-LABEL Description="GDCM" 
+#LABEL Tinashe M. Tapera <taperat@pennmedicine.upenn.edu>
 
 RUN apk --update add ca-certificates && apk upgrade
 
@@ -16,7 +15,7 @@ RUN apk add alpine-sdk perl tzdata && \
     make && make install && rm -rf /opt/GDCM && \
     apk del --purge alpine-sdk perl tzdata cmake && apk add libstdc++
 
-RUN mkdir -p /mnt/inputs && \
-    mkdir -p /mnt/outputs
+RUN mkdir -p /inputs && \
+    mkdir -p /outputs
 
 ENTRYPOINT ["gdcmdump", "--csa"]
