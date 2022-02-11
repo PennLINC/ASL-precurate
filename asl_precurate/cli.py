@@ -37,7 +37,7 @@ def build_call(opts):
         cmd = ['singularity', 'exec', '--cleanenv',
                '-B', dicom_dir_link,
                opts.container, 'gdcmdump',
-               '/inputs/dicom.dcm', '--csa']
+               '/inputs/dicom.dcm', '--csa', "--xml-dict"]
     
     return cmd
 
@@ -60,7 +60,7 @@ def run_call_with_container(call, opts):
                 logger.info("\tRunning Container Call:\n\n" + call)
 
                 ret = subprocess.run(call.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                parse_return(ret)
+                parse_gdcm_return(ret)
 
     else:
 
@@ -76,17 +76,21 @@ def run_call_with_container(call, opts):
 
             ret = subprocess.run(call.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             print(ret)
-            parse_return(ret)
+            parse_gdcm_return(ret)
 
 
-def parse_return(subp):
+def parse_gdcm_return(subp):
 
     if subp.returncode != 0:
         logger.error("Errors returned from container command, parsing now")
         print(subp.stdout.decode('UTF-8'))
         raise RuntimeError
     
-    print(subp.stdout.decode('UTF-8'))
+    ret_data = subp.stdout.decode('UTF-8')
+    #import ipdb; ipdb.set_trace()
+    print(ret_data)
+    #print("debug")
+    #print(len(ret_data[:-99]))
 
 
 def parse_arguments():
