@@ -29,15 +29,23 @@ pip install -e .
 
 1. Download a valid ASL DICOM file (must be a zipped DICOM -- no need to extract)
 
-2. Grab the docker image from dockerhub
+2. Grab the container image from dockerhub or build it with singularity
 
 ```
 docker pull pennlinc/asl-precurate:latest
+## OR
+singularity pull docker://pennlinc/asl-precurate:latest
 ```
 
-3. Run `asl-precurate /PATH/TO/dicom.zip --container pennlinc/asl-precurate:latest --use-tmpdir`
+3. Run 
+
+```
+asl-precurate /PATH/TO/dicom.zip --container pennlinc/asl-precurate:latest --use-tmpdir
+## OR
+asl-precurate /PATH/TO/dicom.zip --container asl-precurate_latest.sif --use-tmpdir
+```
 
 4. [Optional] Pipe your output to a text file to make it easy to share
 ```
-`asl-precurate /PATH/TO/dicom.zip --container pennlinc/asl-precurate:latest --use-tmpdir > /PATH/TO/AN/OUTPUT/file.txt` 
+asl-precurate /PATH/TO/dicom.zip --container pennlinc/asl-precurate:latest --use-tmpdir > /PATH/TO/AN/OUTPUT/file.txt
 ```
